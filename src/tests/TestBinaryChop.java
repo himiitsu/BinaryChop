@@ -1,4 +1,4 @@
-package Tests;
+package tests;
 
 import main.BinaryChop;
 import org.junit.Assert;

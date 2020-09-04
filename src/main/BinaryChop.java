@@ -21,7 +21,7 @@ public class BinaryChop {
         }
         this.key = key;
         left = 0;
-        right = list.size();
+        right = list.size() - 1;
 
         mid = findMiddleIndex(left, right);
         int result = compare(mid);
