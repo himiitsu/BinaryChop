@@ -7,67 +7,94 @@ public class BinaryChop {
 
     List list = new ArrayList();
 
-    private int key;
-    private int left;
-    private int right;
-    private int mid;
+    private int keyValue;
+    private int leftElement;
+    private int rightElement;
+    private int middleElement;
+    private int result;
 
-    public int chop(int key, List list){
-        if(!list.isEmpty()){
-            this.list = list;
+    public int chop(int keyValue, List list){
+        if(checkListIsEmpty(list) == false){
+            return result = -1;
         }
-        else {
-            return -1;
-        }
-        this.key = key;
-        left = 0;
-        right = list.size() - 1;
-
-        mid = findMiddleIndex(left, right);
-        int result = compare(mid);
+        init(keyValue);
+        executeComparison();
         return result;
     }
 
+    private boolean checkListIsEmpty(List list){
+        if(!list.isEmpty()){
+            this.list = list;
+            return true;
+        }
+        else return false;
+    }
 
-    private int findMiddleIndex(int left, int right){
+    private void init(int keyValue){
+        this.keyValue = keyValue;
+        leftElement = 0;
+        rightElement = list.size() - 1;
+    }
+
+    private void executeComparison(){
+        middleElement = findMiddleElementIndex(leftElement, rightElement);
+        result = compareWithKeyValue(middleElement);
+    }
+
+    private int findMiddleElementIndex(int leftElement, int rightElement){
         if (list.size() == 1){
             return 0;
         }
         else {
-            return Math.round((left + right) / 2);
+            return Math.round((leftElement + rightElement) / 2);
         }
     }
 
-    private int compare(int mid){
-        if(findMiddleValue(mid) == key){
-            return mid;
+    private int compareWithKeyValue(int middleElement){
+        if(findMiddleElementValue(middleElement) == keyValue){
+            return middleElement;
         }
         else {
-            return compareWithNewSides(mid);
+            return cutBordersAndCompare(middleElement);
         }
     }
 
-    private int compareWithNewSides(int mid) {
-        if (findMiddleValue(mid) < key) {
-            left = mid + 1;
-            mid = findMiddleIndex(left, right);
-            if((left > right) || ((left == right) && (findMiddleValue(mid) != key))){
+    private int cutBordersAndCompare(int middleElement) {
+        if (findMiddleElementValue(middleElement) < keyValue) {
+            middleElement = cutBorders("left");
+            if(!checkListOnCorrectness(leftElement, rightElement, middleElement)){
                 return -1;
             }
-            return compare(mid);
+            return compareWithKeyValue(middleElement);
         }
-        else if (findMiddleValue(mid) > key) {
-            right = mid - 1;
-            mid = findMiddleIndex(left, right);
-            if((left > right)  || ((left == right) && (findMiddleValue(mid) != key))){
+        else if (findMiddleElementValue(middleElement) > keyValue) {
+            middleElement = cutBorders("right");
+            if(!checkListOnCorrectness(leftElement, rightElement, middleElement)){
                 return -1;
             }
-            return compare(mid);
+            return compareWithKeyValue(middleElement);
         }
         else return -1;
     }
 
-    private int findMiddleValue(int mid){
-        return (int)list.get(mid);
+    private int cutBorders(String side){
+        if(side == "left"){
+            leftElement++;
+        }
+        else if (side == "right"){
+            rightElement--;
+        }
+        return middleElement = findMiddleElementIndex(leftElement, rightElement);
+    }
+
+    private boolean checkListOnCorrectness(int leftElement, int rightElement, int middleElement){
+        if((leftElement > rightElement) || ((leftElement == rightElement) && (findMiddleElementValue(middleElement) != keyValue))){
+            return false;
+        }
+        else return true;
+    }
+
+    private int findMiddleElementValue(int middleElement){
+        return (int)list.get(middleElement);
     }
 }
