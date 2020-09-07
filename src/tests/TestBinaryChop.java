@@ -1,6 +1,7 @@
 package tests;
 
 import main.BinaryChop;
+import main.BinaryChopRecursive;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -8,11 +9,14 @@ import java.util.Arrays;
 
 public class TestBinaryChop {
 
-    BinaryChop binaryChop = new BinaryChop();
+    BinaryChop binaryChopRecursive = new BinaryChopRecursive();
 
     @Test
     public void searchTest(){
-
+        searchAsserts(binaryChopRecursive);
+    }
+    
+    public void searchAsserts(BinaryChop binaryChop){
         Assert.assertEquals(-1, binaryChop.chop(3, Arrays.asList()));
         Assert.assertEquals(-1, binaryChop.chop(3, Arrays.asList(1)));
         Assert.assertEquals(0,  binaryChop.chop(1, Arrays.asList(1)));

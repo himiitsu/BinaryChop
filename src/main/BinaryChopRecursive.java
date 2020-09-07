@@ -3,7 +3,7 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BinaryChop {
+public class BinaryChopRecursive implements BinaryChop {
 
     List list = new ArrayList();
 
@@ -13,6 +13,7 @@ public class BinaryChop {
     private int middleElement;
     private int result;
 
+    @Override
     public int chop(int keyValue, List list){
         if(checkListIsEmpty(list) == false){
             return result = -1;
